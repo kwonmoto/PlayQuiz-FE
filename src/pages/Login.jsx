@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import logo from "../lib/assets/images/Logo_L.png";
 import React, { useState } from "react";
 import * as ButtonStyles from "../styles/ButtonStyles";
@@ -8,8 +7,11 @@ import Checkbox from "../components/Checkbox";
 import LocalNav from "../components/LocalNav";
 import Divider from "../components/Divider";
 import { isValid } from "../lib/utils/validation";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const navigate = useNavigate();
+
   const [authInfo, setAuthInfo] = useState({ email: "", password: "" });
 
   const canLogin =
@@ -19,6 +21,10 @@ export default function Login() {
     { label: "회원가입", callbackFn: () => console.log("회원가입") },
     { label: "비밀번호 찾기", callbackFn: () => console.log("비밀번호 찾기") },
   ];
+
+  const moveToReadSetPage = () => {
+    navigate("/read");
+  };
 
   return (
     <LayoutStyles.Wrapper>
@@ -43,7 +49,11 @@ export default function Login() {
               setAuthInfo({ ...authInfo, password: e.target.value })
             }
           />
-          <ButtonStyles.LongButton children="로그인" disabled={!canLogin} />
+          <ButtonStyles.LongButton
+            children="로그인"
+            disabled={!canLogin}
+            onClick={moveToReadSetPage}
+          />
           <LayoutStyles.Flex>
             <Checkbox id="auto-login" label="자동로그인" />
             <LocalNav list={localNavList} />
